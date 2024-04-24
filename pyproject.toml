@@ -1,0 +1,46 @@
+[project]
+name = "lightning_diffusion"
+authors = [
+    {name = "Adam Pirog"},
+    {name = "Mateusz Stolarski"}
+]
+description = "Lightning fast network diffusion library"
+readme = "README.md"
+license = { text="MIT" }
+dynamic = ["version"]
+requires-python = ">=3.11"
+dependencies = [
+
+    ]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "isort",
+    "black",
+    "pylint"
+    ]
+
+[build-system]
+requires = ["setuptools>=60.0.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["lightning_diffusion*"]
+
+[tool.setuptools.dynamic]
+version = {attr = "lightning_diffusion.version.__version__"}
+
+[tool.black]
+line-length = 79
+target-version = ["py311"]
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra"
+testpaths = ["tests"]
+
+[tool.isort]
+profile = "black"
+line_length = 79
+lines_after_imports = 2
