@@ -50,10 +50,10 @@ class IndependentCascadeModel(DiffusionModel):
             any_infected = True
 
             neighbors = tuple(self.graph.neighbors(node))
-            inf_probas = np.random.random(size=len(neighbors))
-            for neighbor, inf_proba in zip(neighbors, inf_probas):
+            infection_probas = self.rng.random(size=len(neighbors))
+            for neighbor, infection_proba in zip(neighbors, infection_probas):
                 if (
-                    inf_proba <= self.infection_probability
+                    infection_proba <= self.infection_probability
                     and new_state[neighbor] == "susceptible"
                 ):
                     new_state[neighbor] = "infected"

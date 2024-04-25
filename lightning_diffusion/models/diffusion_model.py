@@ -53,7 +53,12 @@ class DiffusionModel(ABC):
         If 'n_iter' < 0 -- run until termination.
         """
         if n_iter > 0:
-            for _ in tqdm(range(n_iter), disable=not verbose):
+            if verbose:
+                loop = tqdm(range(n_iter))
+            else:
+                loop = range(n_iter)
+
+            for _ in loop:
                 self.step()
 
                 if self.terminated:

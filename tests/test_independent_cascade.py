@@ -3,6 +3,7 @@ import ndlib.models.ModelConfig as mc
 import numpy as np
 import pytest
 from networkx import Graph
+from pytest_benchmark.fixture import BenchmarkFixture
 
 from lightning_diffusion.models import IndependentCascadeModel
 
@@ -53,7 +54,7 @@ def equal_state(ndlib_state: dict, lightning_state: dict) -> bool:
 
 
 @pytest.mark.parametrize("graph", ("small", "medium", "large"))
-def test_compatibility(graph: str, request):
+def test_compatibility(graph: str, request: pytest.FixtureRequest):
     graph: Graph = request.getfixturevalue(f"{graph}_graph")
 
     ndlib_model = get_ndlib_model(graph)
@@ -68,17 +69,21 @@ def test_compatibility(graph: str, request):
         assert equal_state(ndlib_status, model.state_summary)
 
 
-def reset_run(model: IndependentCascadeModel, n_steps: int) -> None:
+def reset_run(model: IndependentCascadeModel, n_steps: int, **kwargs) -> None:
     """
     Reset and run the diffusion model
     (used for benchmarks)
     """
     model.reset()
-    model.run(n_steps)
+    model.run(n_steps, **kwargs)
 
 
 @pytest.mark.parametrize("graph", ("small", "medium", "large"))
-def test_ndlib_speed(graph: str, request, benchmark):
+def test_ndlib_speed(
+    graph: str,
+    request: pytest.FixtureRequest,
+    benchmark: BenchmarkFixture,
+):
     graph: Graph = request.getfixturevalue(f"{graph}_graph")
     model = get_ndlib_model(graph)
     model.run = model.iteration_bunch
@@ -87,8 +92,12 @@ def test_ndlib_speed(graph: str, request, benchmark):
 
 
 @pytest.mark.parametrize("graph", ("small", "medium", "large"))
-def test_lightning_speed(graph: str, request, benchmark):
+def test_lightning_speed(
+    graph: str,
+    request: pytest.FixtureRequest,
+    benchmark: BenchmarkFixture,
+):
     graph: Graph = request.getfixturevalue(f"{graph}_graph")
     model = get_lightning_model(graph)
 
-    benchmark(reset_run, model, 5)
+    benchmark(reset_run, model, 5, verbose=False)
