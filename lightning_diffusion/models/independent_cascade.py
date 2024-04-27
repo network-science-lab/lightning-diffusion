@@ -59,11 +59,12 @@ class IndependentCascadeModel(DiffusionModel):
 
             new_state[node] = "recovered"
 
-        self.state = new_state
-        self.iteration += 1
-
         if not any_infected:
             self.terminated = True
+            return
+
+        self.state = new_state
+        self.iteration += 1
 
     def reset(self) -> None:
         self.terminated = False
