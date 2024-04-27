@@ -78,8 +78,9 @@ def reset_run(model: IndependentCascadeModel, n_steps: int, **kwargs) -> None:
     model.run(n_steps, **kwargs)
 
 
+@pytest.mark.benchmark(group="Independent Cascade Model")
 @pytest.mark.parametrize("graph", ("small", "medium", "large"))
-def test_ndlib_speed(
+def test_ndlib(
     graph: str,
     request: pytest.FixtureRequest,
     benchmark: BenchmarkFixture,
@@ -91,8 +92,9 @@ def test_ndlib_speed(
     benchmark(reset_run, model, 6)
 
 
+@pytest.mark.benchmark(group="Independent Cascade Model")
 @pytest.mark.parametrize("graph", ("small", "medium", "large"))
-def test_lightning_speed(
+def test_lightning(
     graph: str,
     request: pytest.FixtureRequest,
     benchmark: BenchmarkFixture,
