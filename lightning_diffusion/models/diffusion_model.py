@@ -68,7 +68,7 @@ class DiffusionModel(ABC):
                 self.step()
 
     def validate_graph(self, graph: Graph) -> None:
-        if tuple(graph.nodes) != tuple(range(len(graph))):
+        if sorted(graph.nodes) != list(range(len(graph))):
             raise UnsupportedGraphError(
                 "Diffusion models support only graph with 'index-style' "
                 "node identifiers -- continous integers, starting from 0"
