@@ -26,13 +26,19 @@ def test_termination(small_graph: Graph):
         assert model.iteration == iteration
 
 
-def test_unsupported_graph():
+@pytest.mark.parametrize(
+    "nodes",
+    ((9, 7, 15), ("node", "node", "node")),
+)
+def test_unsupported_graph(nodes: tuple):
     graph = Graph()
-    graph.add_nodes_from((9, 7, 15, 32, 1))
+    graph.add_nodes_from(nodes)
 
     with pytest.raises(UnsupportedGraphError, match="index"):
         get_model(graph)
 
+
+def test_unsorted_nodes():
     graph = Graph()
     graph.add_nodes_from((2, 4, 0, 3, 1))
 

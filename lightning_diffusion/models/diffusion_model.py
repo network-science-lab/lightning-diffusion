@@ -70,12 +70,20 @@ class DiffusionModel(ABC):
             while not self.terminated:
                 self.step()
 
-    def validate_graph(self, graph: Graph) -> None:
-        if sorted(graph.nodes) != list(range(len(graph))):
-            raise UnsupportedGraphError(
-                "Diffusion models support only graph with 'index-style' "
-                "node identifiers -- continous integers, starting from 0"
-            )
+    @staticmethod
+    def validate_graph(graph: Graph) -> None:
+        exc = UnsupportedGraphError(
+            "Diffusion models support only graph with 'index-style' "
+            "node identifiers -- continous integers, starting from 0"
+        )
+
+        try:
+            nodes = sorted(graph.nodes)
+        except TypeError:
+            raise exc
+
+        if nodes != list(range(len(graph))):
+            raise exc
 
     def is_terminated(self) -> bool:
         if self.terminated:
