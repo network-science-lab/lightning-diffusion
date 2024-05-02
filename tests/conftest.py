@@ -15,3 +15,8 @@ def medium_graph() -> nx.Graph:
 @fixture(scope="session")
 def large_graph() -> nx.Graph:
     return nx.barabasi_albert_graph(10_000, 7, seed=2042)
+
+
+@fixture(scope="session")
+def xlarge_graph() -> nx.Graph:
+    return nx.barabasi_albert_graph(55_000, 8, seed=2042)

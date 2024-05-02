@@ -79,7 +79,7 @@ def reset_run(model: IndependentCascadeModel, n_steps: int, **kwargs) -> None:
 
 
 @pytest.mark.benchmark(group="Independent Cascade Model")
-@pytest.mark.parametrize("graph", ("small", "medium", "large"))
+@pytest.mark.parametrize("graph", ("small", "medium", "large", "xlarge"))
 def test_ndlib(
     graph: str,
     request: pytest.FixtureRequest,
@@ -93,7 +93,7 @@ def test_ndlib(
 
 
 @pytest.mark.benchmark(group="Independent Cascade Model")
-@pytest.mark.parametrize("graph", ("small", "medium", "large"))
+@pytest.mark.parametrize("graph", ("small", "medium", "large", "xlarge"))
 def test_lightning(
     graph: str,
     request: pytest.FixtureRequest,

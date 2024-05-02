@@ -40,6 +40,9 @@ class IndependentCascadeModel(DiffusionModel):
 
     def step(self) -> None:
 
+        if self.is_terminated():
+            return
+
         any_infected = False
         new_state = self.state.copy()
 

@@ -1,5 +1,5 @@
-import warnings
 from abc import ABC, abstractmethod
+from warnings import warn
 
 import numpy as np
 from networkx import Graph
@@ -52,6 +52,9 @@ class DiffusionModel(ABC):
         Runs multiple steps of the diffusion process.
         If 'n_iter' < 0 -- run until termination.
         """
+        if self.is_terminated():
+            return
+
         if n_iter > 0:
             if verbose:
                 loop = tqdm(range(n_iter))
@@ -76,7 +79,7 @@ class DiffusionModel(ABC):
 
     def is_terminated(self) -> bool:
         if self.terminated:
-            warnings.warn(
+            warn(
                 "The environment has already been terminated. "
                 "You should call reset(); "
                 "Any further steps are undefined behavior.",
