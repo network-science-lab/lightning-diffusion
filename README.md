@@ -16,11 +16,7 @@ Lightning fast network diffusion library
 * `state_space: tuple[str]` - Available node states
 * `state_summary: dict[str, int]` - Current state summary - how many nodes are at each state
 
-## Supported Models
-
-### IndependenceCascadeModel
-
-##### Example
+#### Example
 ```python
 import networkx as nx
 
@@ -38,6 +34,16 @@ model.run(n_iter=5)
 model.state_summary
 >>> {'susceptible': 889, 'infected': 0, 'recovered': 111}
 ```
+
+## Supported Models
+
+### IndependenceCascadeModel
+
+Arguments: 
+
+* `infection_probability: float` - Probability of the infection spreading to each neighbour.
+* `initially_infected: float | int` - Initially infected number of nodes.
+
 
 
 ## Installation
