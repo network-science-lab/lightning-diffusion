@@ -10,7 +10,9 @@ license = { text="MIT" }
 dynamic = ["version"]
 requires-python = ">=3.11"
 dependencies = [
-
+    "networkx>=3.3,<4.0",
+    "numpy>=1.26.4,<2.0.0",
+    "tqdm>=4.66.0,<5.0.0"
     ]
 
 [project.optional-dependencies]
@@ -18,7 +20,9 @@ dev = [
     "pytest",
     "isort",
     "black",
-    "pylint"
+    "pylint",
+    "pytest-benchmark",
+    "ndlib>=5.1.1,<6.0.0"
     ]
 
 [build-system]
